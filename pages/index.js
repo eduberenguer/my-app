@@ -76,6 +76,7 @@ const Page = ({ data }) => {
       {data.records.map((item) => {
         return (
           <div key={item.attributes.url}>
+            <p>--------------------</p>
             <p>{item.Name}</p>
             <button onClick={() => deleteAccount(item.attributes.url)}>
               Borrar
@@ -98,6 +99,7 @@ const Page = ({ data }) => {
   );
 };
 
+// Método para que me devuelva los datos de la API:
 // const Index = async () => {
 //   const url = "https://login.salesforce.com/services/oauth2/token";
 //   let myHeaders = new Headers();
