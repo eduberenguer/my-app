@@ -10,10 +10,6 @@ import {
 
 const Page = ({ data, token }) => {
   const router = useRouter();
-  const deleteAccount = async (url) => {
-    const id = url.split(`Contact/`)[1];
-    await deleteContact(id, token);
-  };
 
   const refreshSSProps = () => {
     router.replace(router.asPath);
@@ -37,7 +33,7 @@ const Page = ({ data, token }) => {
               <p>{item.Name}</p>
               <button
                 onClick={() =>
-                  deleteAccount(item.attributes.url).then(() =>
+                  deleteContact(item.attributes.url, token).then(() =>
                     refreshSSProps()
                   )
                 }

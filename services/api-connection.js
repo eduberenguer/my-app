@@ -1,3 +1,7 @@
+/**
+ * @description This function returns a token to perform all CRUD operations
+ * @returns String;
+ */
 export const getToken = async () => {
   const url = 'https://login.salesforce.com/services/oauth2/token';
   let myHeaders = new Headers();
@@ -30,6 +34,10 @@ export const getToken = async () => {
     .catch((error) => console.log('error', error));
 };
 
+/**
+ * @description This function returns an Object containing records of all contacts
+ * @returns Object containing records of all contacts
+ */
 export const getAllContacts = async () => {
   const token = await getToken();
   const myHeaders = new Headers();
@@ -52,6 +60,11 @@ export const getAllContacts = async () => {
   return data;
 };
 
+/**
+ * @description This functions creates a new contact, you should call refreshSSProps after
+ * @param {SyntheticEvent} event
+ * @param {String} token
+ */
 export const createContact = async (event, token) => {
   event.preventDefault();
   const myHeaders = new Headers();
@@ -77,6 +90,12 @@ export const createContact = async (event, token) => {
     .catch((error) => console.error('error', error));
 };
 
+/**
+ * @description This functions edits a contact, you should call refreshSSProps after
+ * @param {SyntheticEvent} event
+ * @param {String} url Contact url provided in records data
+ * @param {String} token
+ */
 export const editContact = async (event, url, token) => {
   const id = url.split(`Contact/`)[1];
   event.preventDefault();
@@ -103,7 +122,13 @@ export const editContact = async (event, url, token) => {
     .catch((error) => console.log('error', error));
 };
 
-export const deleteContact = async (id, token) => {
+/**
+ * @description This functions deletes a contact, you should call refreshSSProps after
+ * @param {String} url Contact url provided in records data
+ * @param {String} token
+ */
+export const deleteContact = async (url, token) => {
+  const id = url.split(`Contact/`)[1];
   const myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Authorization', `Bearer ${token}`);
@@ -114,7 +139,7 @@ export const deleteContact = async (id, token) => {
     redirect: 'follow',
   };
 
-  return fetch(
+  fetch(
     `https://playful-raccoon-kmmjx6-dev-ed.my.salesforce.com/services/data/v53.0/sobjects/Contact/${id}`,
     requestOptions
   ).catch((error) => console.log('error', error));
