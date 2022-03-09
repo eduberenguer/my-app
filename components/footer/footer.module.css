@@ -1,0 +1,10 @@
+.container {
+  margin: 0;
+  padding: 40px;
+  background-color: rgb(46, 46, 155);
+  color: white;
+}
+
+.copyright a {
+  color: aqua;
+}

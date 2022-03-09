@@ -1,0 +1,9 @@
+.container {
+  display: flex;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: rgb(39, 44, 117);
+}
+
+.img {
+  width: 40%;
+}
