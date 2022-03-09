@@ -1,12 +1,16 @@
-import { useRouter } from 'next/router';
-import React from 'react';
+import { useRouter } from "next/router";
+import React from "react";
+import { Layout } from "../components/layout/layout";
 import {
   createContact,
   deleteContact,
   editContact,
   getAllContacts,
   getToken,
-} from '../services/api-connection';
+} from "../services/api-connection";
+import FormCreate from "./form-create/formCreate";
+import FormEdit from "./form-edit/formEdit";
+import home from "../styles/Home.module.css";
 
 const Page = ({ data, token }) => {
   const router = useRouter();
@@ -16,51 +20,36 @@ const Page = ({ data, token }) => {
   };
 
   return (
-    <div>
-      <form
-        onSubmit={(e) => createContact(e, token).then(() => refreshSSProps())}
-      >
-        <label htmlFor='name'>Name</label>
-        <input id='name' name='name' type='text' autoComplete='name' required />
-        <button type='submit'>Create</button>
-      </form>
-      {data &&
-        data.records &&
-        data.records.map((item) => {
-          return (
-            <div key={item.attributes.url}>
-              <p>--------------------</p>
-              <p>{item.Name}</p>
-              <button
-                onClick={() =>
-                  deleteContact(item.attributes.url, token).then(() =>
-                    refreshSSProps()
-                  )
-                }
-              >
-                Borrar
-              </button>
-              <form
-                onSubmit={(e) =>
-                  editContact(e, item.attributes.url, token).then(() =>
-                    refreshSSProps()
-                  )
-                }
-              >
-                <label htmlFor='name'>New Name</label>
-                <input
-                  id='name'
-                  name='name'
-                  type='text'
-                  autoComplete='name'
-                  required
-                />
-                <button type='submit'>Edit</button>
-              </form>
-            </div>
-          );
-        })}
-    </div>
+    <Layout>
+      <FormCreate
+        createContact={createContact}
+        refreshSSProps={refreshSSProps}
+        token={token}
+      ></FormCreate>
+      <div className={home.container}>
+        {data &&
+          data.records &&
+          data.records.map((item) => {
+            return (
+              <div className={home.user} key={item.attributes.url}>
+                <p>--------------------</p>
+                <p className={home.name}>{item.Name}</p>
+                <button
+                  className={home.button}
+                  onClick={() =>
+                    deleteContact(item.attributes.url, token).then(() =>
+                      refreshSSProps()
+                    )
+                  }
+                >
+                  Borrar
+                </button>
+              </div>
+            );
+          })}
+      </div>
+      <FormEdit editContact={editContact}></FormEdit>
+    </Layout>
   );
 };
 
